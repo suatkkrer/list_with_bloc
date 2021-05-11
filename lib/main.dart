@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 50,
                       child: Row(
                         children: [
-                          Text("${person.name} - ${person.tel}"),
+                          Text("${person.kisi_ad} - ${person.kisi_tel}"),
                         ],
                       ),
                     ),

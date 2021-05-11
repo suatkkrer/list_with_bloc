@@ -1,21 +1,22 @@
 import 'package:list_with_bloc/PeopleModel.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:list_with_bloc/PeopleResponse.dart';
 
 abstract class PeopleRepository{
   Future<List<People>> bringPeople ();
 }
 
 class PeopleDaoRepository implements PeopleRepository{
+  
+  List<People> parsePeopleResponse(String response){
+    return PeopleResponse.fromJson(json.decode(response)).peopleList;
+  }
 
   @override
   Future<List<People>> bringPeople() async{
-    var peopleList = List<People>();
-
-    var k1 = People("1","asdfasf","1111");
-    var k2 = People("1","sadfasf","231321");
-
-    peopleList.add(k1);
-    peopleList.add(k2);
-
-    return peopleList;
+    var url = Uri.parse("http://kasimadalan.pe.hu/kisiler/tum_kisiler.php");
+    var response = await http.get(url);
+    return parsePeopleResponse(response.body);
   }
 }
